@@ -101,6 +101,7 @@ const schema = {
 			listOfVolunteer:
 			{
 				type: "array",
+				minItems: 1,
 				title: "A list of experience",
 				items: {
 					type: "object",
