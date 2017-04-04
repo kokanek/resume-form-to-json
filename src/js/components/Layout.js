@@ -9,81 +9,307 @@ import { render } from "react-dom";
 import Form from "react-jsonschema-form";
 
 const schema = {
-	title: "Todo App - To keep a track of things to be done !",
+	title: "JSON resume ! Create your custom resume",
 	type: "object",
-  	required: ["title"],
-  	properties:
+	required: ["title"],
+	properties:
 	{
-    	basics:
-    	{
-    		type: "object",
-    		title: "Basic Info",
-    		properties:
-    		{
-    			name: {type: "string", title: "Name", default: "John Doe"},
-    			label: {type: "string", title: "Label", default: "Programmer"},
-    			picture: {type: "string", title: "Picture", default: "abc.jpg"},
-    			email: {type: "string", title: "Email", default: "john.doe@gmail.com"},
-    			phone: {type: "string", title: "Phone No.", default: "(912) 555-4321"},
-    			website: {type: "string", title: "Website", default: "www.johndoe.com"},
-    			summary: {type: "string", title: "Summary", default: "A summary of John Doe"},
-    			location: {type: "object", title: "Location", properties:
-	    			{
-	    				address: {type: "string", title: "Address", default: "2712 Broadway St"},
-	    				postalCode: {type: "string", title: "Postal Code", default: "CA 94115"},
-	    				city: {type: "string", title: "Summary", City: "San Francisco"},
-	    				countryCode: {type: "string", title: "Country Code", default: "US"},
-	    				region: {type: "string", title: "Summary", Region: "California"},
-	    			}
-    			},
+		basics:
+		{
+			type: "object",
+			title: "Basic Info",
+			properties:
+			{
+				name: {type: "string", title: "Name"},
+				label: {type: "string", title: "Label"},
+				picture: {type: "string", title: "Picture"},
+				email: {type: "string", title: "Email"},
+				phone: {type: "string", title: "Phone No."},
+				website: {type: "string", title: "Website"},
+				summary: {type: "string", title: "Summary"},
+				location: {type: "object", title: "Location", properties:
+				{
+					address: {type: "string", title: "Address"},
+					postalCode: {type: "string", title: "Postal Code"},
+					city: {type: "string", title: "Summary"},
+					countryCode: {type: "string", title: "Country Code"},
+					region: {type: "string", title: "Summary"},
+				}
+			},
 
-    		}
-  		},
-  		profiles:
-  		{
-  			type: "object",
-  			title: "Profiles",
-  			properties:
-  			{
-  				listOfProfiles: {
-					type: "array",
-					title: "A list of Profiles",
-					items: {
-						type: "object",
-						properties:
-						{
-							username: {type: "string", title: "User Name", default: "CA 94115"},
-	    					url: {type: "string", title: "URL", City: "San Francisco"},
-	    					network: {type: "string", title: "Network", default: "2712 Broadway St"},
+		}
+	},
+	profiles:
+	{
+		type: "object",
+		title: "Profiles",
+		properties:
+		{
+			listOfProfiles:
+			{
+				type: "array",
+				title: "A list of Profiles",
+				minItems: 2,
+				items: {
+					type: "object",
+					properties:
+					{
+						username: {type: "string", title: "User Name"},
+						url: {type: "string", title: "URL"},
+						network: {type: "string", title: "Network"},
+					}
+				}
+			}
+		}
+	},
+	works:
+	{
+		type: "object",
+		title: "Work Experience",
+		properties:
+		{
+			listOfWorks:
+			{
+				type: "array",
+				title: "A list of experience",
+				minItems: 1,
+				items: {
+					type: "object",
+					properties:
+					{
+						company: {type: "string", title: "Company"},
+						position: {type: "string", title: "Position"},
+						website: {type: "string", title: "Website"},
+						startDate: {type: "string", title: "Start Date (YY-MM-DD)"},
+						endDate: {type: "string", title: "End Date (YY-MM-DD)"},
+						summary: {type: "string", title: "Summary"},
+						highlights: {
+							type: "array",
+							items: {type: "string", title: "Highlights"},
 						}
 					}
 				}
-  			}
-  		},
-   		title2: {type: "string", title: "Secondary task !", default: "Another task"},
-   		done: {type: "boolean", title: "Done?", default: false},
-  	}
+			}
+		}
+	},
+	volunteerships:
+	{
+		type: "object",
+		title: "Volunteer Experience",
+		properties:
+		{
+			listOfVolunteer:
+			{
+				type: "array",
+				title: "A list of experience",
+				items: {
+					type: "object",
+					properties:
+					{
+						company: {type: "string", title: "Organization"},
+						position: {type: "string", title: "Position"},
+						website: {type: "string", title: "Website"},
+						startDate: {type: "string", title: "Start Date (YY-MM-DD)"},
+						endDate: {type: "string", title: "End Date (YY-MM-DD)"},
+						summary: {type: "string", title: "Summary"},
+						highlights: {
+							type: "array",
+							items: {type: "string", title: "Highlights"},
+						}
+					}
+				}
+			}
+		}
+	},
+	educations:
+	{
+		type: "object",
+		title: "Education",
+		properties:
+		{
+			listOfEducations:
+			{
+				type: "array",
+				title: "A list of education experience",
+				items: {
+					type: "object",
+					properties:
+					{
+						university: {type: "string", title: "University"},
+						field: {type: "string", title: "Field of Study"},
+						degree: {type: "string", title: "Type of Degree"},
+						startDate: {type: "string", title: "Start Date (YY-MM-DD)"},
+						endDate: {type: "string", title: "End Date (YY-MM-DD)"},
+						gpa: {type: "string", title: "GPA"},
+						courses: {
+							type: "array",
+							items: {type: "string", title: "Courses"},
+						}
+					}
+				}
+			}
+		}
+	},
+	awards:
+	{
+	  type: "object",
+	  title: "Awards",
+	  properties:
+	  {
+	    listOfAwards:
+	    {
+	      type: "array",
+	      title: "A list of Awards",
+	      items: {
+	        type: "object",
+	        properties:
+	        {
+	          title: {type: "string", title: "Name of the Award"},
+	          awarder: {type: "string", title: "Awarder"},
+	          summary: {type: "string", title: "Summary of the award"},
+	          date: {type: "string", title: "Start Date (YY-MM-DD)"},
+	        }
+	      }
+	    }
+	  }
+	},
+	publications:
+	{
+	  type: "object",
+	  title: "Publications",
+	  properties:
+	  {
+	    listOfPublications:
+	    {
+	      type: "array",
+	      title: "A list of Publications",
+	      items: {
+	        type: "object",
+	        properties:
+	        {
+	          title: {type: "string", title: "Title of the Publication"},
+	          publisher: {type: "string", title: "Publisher"},
+	          summary: {type: "string", title: "Summary of the award"},
+	          website: {type: "string", title: "Website"},
+	          releaseDate: {type: "string", title: "Start Date (YY-MM-DD)"},
+	        }
+	      }
+	    }
+	  }
+	},
+	skills:
+	{
+	  type: "object",
+	  title: "Skills",
+	  properties:
+	  {
+	    listOfSkills:
+	    {
+	      type: "array",
+	      title: "A list of Skills",
+	      items: {
+	        type: "object",
+	        properties:
+	        {
+	          name: {type: "string", title: "Name of the Skill"},
+	          level: {type: "string", title: "Level of the Skill"},
+						keywords: {
+							type: "array",
+							items: {type: "string", title: "Keywords"},
+						}
+	        }
+	      }
+	    }
+	  }
+	},
+	languages:
+	{
+	  type: "object",
+	  title: "Languages",
+	  properties:
+	  {
+	    listOfAwards:
+	    {
+	      type: "array",
+	      title: "A list of Known Languages",
+	      items: {
+	        type: "object",
+	        properties:
+	        {
+	          name: {type: "string", title: "Name of the Language"},
+	          level: {type: "string", title: "Level of Expertise"},
+	        }
+	      }
+	    }
+	  }
+	},
+	interests:
+	{
+	  type: "object",
+	  title: "Interests",
+	  properties:
+	  {
+	    listOfSkills:
+	    {
+	      type: "array",
+	      title: "A list of Interests",
+	      items: {
+	        type: "object",
+	        properties:
+	        {
+	          name: {type: "string", title: "Name of the Interest"},
+						keywords: {
+							type: "array",
+							items: {type: "string", title: "Keywords"},
+						}
+	        }
+	      }
+	    }
+	  }
+	},
+	references:
+	{
+	  type: "object",
+	  title: "References",
+	  properties:
+	  {
+	    listOfAwards:
+	    {
+	      type: "array",
+	      title: "A list of Known References",
+	      items: {
+	        type: "object",
+	        properties:
+	        {
+	          name: {type: "string", title: "Name of the Reference"},
+	          reference: {type: "string", title: "Reference string"},
+	        }
+	      }
+	    }
+	  }
+	},
+	title2: {type: "string", title: "Secondary task !"},
+	done: {type: "boolean", title: "Done?"},
+}
 };
 
 
 export default class Layout extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      title: "Welcome, this is ReactJS",
-    };
-  }
+	constructor() {
+		super();
+		this.state = {
+			title: "Welcome, this is ReactJS",
+		};
+	}
 
-  changeTitle(title) {
-    this.setState({title});
-  }
+	changeTitle(title) {
+		this.setState({title});
+	}
 
-  render() {
-    return (
-      <Form schema={schema}
-        onChange={alert("changed")}
-        onSubmit={alert("submitted")}
-        onError={alert("errors")} />
-    );
-  }
+	render() {
+		return (
+			<Form schema={schema}
+			/>
+		);
+	}
 }
